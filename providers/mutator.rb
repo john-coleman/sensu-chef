@@ -16,6 +16,9 @@ action :create do
   }
 
   f = sensu_json_file @definition_path do
+    owner new_resource.owner
+    group new_resource.group
+    mode new_resource.mode
     content definition
   end
 

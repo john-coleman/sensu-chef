@@ -9,6 +9,9 @@ action :create do
   }
 
   f = sensu_json_file ::File.join(node.sensu.directory, "conf.d", "client.json") do
+    owner new_resource.owner
+    group new_resource.group
+    mode new_resource.mode
     content definition
   end
 

@@ -74,6 +74,8 @@ package "sensu" do
 end
 
 template "/etc/default/sensu" do
+  owner node['sensu']['user']
+  group node['sensu']['group']
   source "sensu.default.erb"
   notifies :create, "ruby_block[sensu_service_trigger]"
 end

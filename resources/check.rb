@@ -13,6 +13,9 @@ attribute :publish, :kind_of => [TrueClass, FalseClass]
 attribute :low_flap_threshold, :kind_of => Integer
 attribute :high_flap_threshold, :kind_of => Integer
 attribute :additional, :kind_of => Hash, :default => Hash.new
+attribute :owner, :kind_of => String, :default => node['sensu']['user']
+attribute :group, :kind_of => String, :default => node['sensu']['group']
+attribute :mode, :kind_of => [String, Integer], :default => 0640
 
 def initialize(*args)
   super

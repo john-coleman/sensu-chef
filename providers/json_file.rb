@@ -3,8 +3,8 @@ action :create do
     directory ::File.dirname(new_resource.path) do
       recursive true
       owner new_resource.owner
-      owner new_resource.group
-      mode 0750
+      group new_resource.group
+      mode 0755
     end
 
     f = file new_resource.path do

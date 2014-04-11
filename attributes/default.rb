@@ -8,7 +8,14 @@ default.sensu.use_ssl = true
 default.sensu.use_embedded_ruby = false
 default.sensu.init_style = "sysv"
 default.sensu.service_max_wait = 10
-default.sensu.admin = 'root'
+case node['platform']
+when 'windows'
+  default.sensu.user = 'sensu'
+  default.sensu.group = 'Users'
+else
+  default.sensu.user = 'sensu'
+  default.sensu.group = 'root'
+end
 
 default.sensu.apt_repo_url = "http://repos.sensuapp.org/apt"
 default.sensu.yum_repo_url = "http://repos.sensuapp.org"

@@ -11,6 +11,9 @@ action :create do
   end
 
   f = sensu_json_file ::File.join(node.sensu.directory, "config.json") do
+    owner new_resource.owner
+    group new_resource.group
+    mode new_resource.mode
     content Sensu::Helpers.sanitize(definitions)
   end
 

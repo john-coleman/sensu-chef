@@ -4,6 +4,9 @@ attribute :address, :kind_of => String, :required => true
 attribute :subscriptions, :kind_of => Array, :default => Array.new
 attribute :keepalive, :kind_of => Hash, :default => Hash.new
 attribute :additional, :kind_of => Hash, :default => Hash.new
+attribute :owner, :kind_of => String, :default => node['sensu']['user']
+attribute :group, :kind_of => String, :default => node['sensu']['group']
+attribute :mode, :kind_of => [String, Integer], :default => 0640
 
 def initialize(*args)
   super

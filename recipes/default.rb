@@ -26,30 +26,38 @@ end
 
 case node.platform
 when "windows"
-  group "sensu" do
+  user node['sensu']['user'] do
     action :create
-    gid 1001
   end
 
-  user "sensu" do
+  # Not fully idempotent on Windows yet
+  # Raises exception on windows for [some] Builtin groups
+  group node['sensu']['group'] do
     action :create
-    gid 1001
+    not_if { node['sensu']['group'] == 'Administrators'}
   end
+
   include_recipe "sensu::_windows"
 else
   include_recipe "sensu::_linux"
 end
 
 directory node.sensu.log_directory do
-  owner "sensu"
-  group "sensu"
+  owner node['sensu']['user']
+  group node['sensu']['group']
   recursive true
   mode 0750
 end
 
+directory node.sensu.directory do
+  owner node['sensu']['user']
+  group node['sensu']['group']
+  mode 0755
+end
+
 directory File.join(node.sensu.directory, "conf.d") do
-  owner "sensu"
-  group "sensu"
+  owner node['sensu']['user']
+  group node['sensu']['group']
   recursive true
   mode 0750
 end
@@ -60,8 +68,8 @@ if node.sensu.use_ssl
   node.override.sensu.rabbitmq.ssl.private_key_file = File.join(node.sensu.directory, "ssl", "key.pem")
 
   directory File.join(node.sensu.directory, "ssl") do
-    owner node['sensu']['admin']
-    group "sensu"
+    owner node['sensu']['user']
+    group node['sensu']['group']
     mode 0750
   end
 
@@ -69,15 +77,15 @@ if node.sensu.use_ssl
 
   file node.sensu.rabbitmq.ssl.cert_chain_file do
     content ssl["client"]["cert"]
-    owner node['sensu']['admin']
-    group "sensu"
+    owner node['sensu']['user']
+    group node['sensu']['group']
     mode 0640
   end
 
   file node.sensu.rabbitmq.ssl.private_key_file do
     content ssl["client"]["key"]
-    owner node['sensu']['admin']
-    group "sensu"
+    owner node['sensu']['user']
+    group node['sensu']['group']
     mode 0640
   end
 else
@@ -87,4 +95,8 @@ else
   end
 end
 
-sensu_base_config node.name
+sensu_base_config node.name do
+  owner node['sensu']['user']
+  group node['sensu']['group']
+  mode 0640
+end

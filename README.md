@@ -113,6 +113,10 @@ Enables and starts the Sensu dashboard.
 `node.sensu.use_unstable_repo` - If the build resides on the
 "unstable" repository.
 
+`node.sensu.user` - User for sensu directory and file ownership.
+
+`node.sensu.group` - Group for sensu directory and file ownership.
+
 `node.sensu.directory` - Sensu configuration directory.
 
 `node.sensu.log_directory` - Sensu log directory.

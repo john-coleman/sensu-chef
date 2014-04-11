@@ -10,6 +10,9 @@ attribute :timeout, :kind_of => Integer
 attribute :socket, :kind_of => Hash
 attribute :exchange, :kind_of => Hash
 attribute :additional, :kind_of => Hash, :default => Hash.new
+attribute :owner, :kind_of => String, :default => node['sensu']['user']
+attribute :group, :kind_of => String, :default => node['sensu']['group']
+attribute :mode, :kind_of => [String, Integer], :default => 0640
 
 def initialize(*args)
   super

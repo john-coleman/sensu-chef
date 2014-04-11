@@ -26,6 +26,7 @@ end
 execute "sensu-client.exe install" do
   cwd "C:\\opt\\sensu\\bin"
   action :nothing
+  returns [ 0, 23 ]
 end
 
 template "C:\\opt\\sensu\\bin\\sensu-client.xml" do
