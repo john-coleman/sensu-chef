@@ -10,9 +10,13 @@ default.sensu.init_style = "sysv"
 default.sensu.service_max_wait = 10
 case node['platform']
 when 'windows'
+  default.sensu.directory = "C:/opt/sensu"
+  default.sensu.log_directory = "C:/var/log/sensu"
   default.sensu.user = 'sensu'
   default.sensu.group = 'Users'
 else
+  default.sensu.directory = "/etc/sensu"
+  default.sensu.log_directory = "/var/log/sensu"
   default.sensu.user = 'sensu'
   default.sensu.group = 'root'
 end

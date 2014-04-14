@@ -52,7 +52,7 @@ end
 directory node.sensu.directory do
   owner node['sensu']['user']
   group node['sensu']['group']
-  mode 0755
+  mode 0750
 end
 
 directory File.join(node.sensu.directory, "conf.d") do
